@@ -145,7 +145,6 @@ function logout() {
 }
 
 /* Page Initializations */
-
 // Initialize login page functionality
 function initLogin() {
     // If a user is already logged in, redirect to home
@@ -166,6 +165,9 @@ function initLogin() {
         }
     });
 }
+  
+  
+  
 
 // Initialize home page functionality
 function initHome() {

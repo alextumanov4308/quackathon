@@ -149,6 +149,25 @@
       background-color: white;
       color: black;
     }
+    /* ===== Sign Up Button ===== */
+    .signup-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #0062b7;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .signup-link:hover {
+      background: #001167;
+      transform: translateY(-3px);
+    }
   </style>
 </head>
 <body>
@@ -161,6 +180,21 @@
   </header>
   
   <!-- Main Content (About Us Section) -->
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
   <div class="main-content">
     <h2>About Us</h2>
     <p>Welcome! Explore the best spots around our campus.</p>
@@ -195,12 +229,41 @@
       </table>
     </form>
     <p id="loginMessage" class="message"></p>
+    <a href="signup.html" class="signup-link">Don't have an account? Sign Up</a>
   </section>
   
   <script src="script.js"></script>
   <script>
-    // Call your initialization function if needed
-    initLogin();
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      // Retrieve form values
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const messageEl = document.getElementById("loginMessage");
+      
+      // Retrieve users from localStorage
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      
+      // Find the user with matching username and password
+      const user = users.find(u => u.username === username && u.password === password);
+      
+      if (!user) {
+        messageEl.textContent = "Invalid username or password!";
+        return;
+      }
+      
+      // Set current user in sessionStorage
+      sessionStorage.setItem("currentUser", username);
+      
+      messageEl.style.color = "#80ff80";
+      messageEl.textContent = "Login successful! Redirecting to home...";
+      
+      // Redirect to home page after a short delay
+      setTimeout(() => {
+        window.location.href = "main.html";
+      }, 2000);
+    });
   </script>
   <footer>
     <p><br>&copy; 2025 University of Dundee. All Rights Reserved.</p>

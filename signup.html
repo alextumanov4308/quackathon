@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up - University of Dundee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* ===== Base & Reset ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: url("image.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    /* ===== Container ===== */
+    .signup-container {
+      background: rgba(0, 0, 0, 0.7);
+      width: 90%;
+      max-width: 400px;
+      margin: 150px auto;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .signup-container h2 {
+      font-size: 2em;
+      margin-bottom: 1em;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+    /* ===== Table Form Styling ===== */
+    .signup-form table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1em;
+    }
+    .signup-form td {
+      padding: 8px 0;
+      text-align: left;
+    }
+    .signup-form label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1em;
+    }
+    .signup-form input[type="text"],
+    .signup-form input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border: none;
+      border-radius: 4px;
+    }
+    .signup-form input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1em;
+      background: linear-gradient(45deg, #0062b7, #001167);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .signup-form input[type="submit"]:hover {
+      background: linear-gradient(45deg, #001167, #0062b7);
+      transform: translateY(-3px);
+    }
+    .message {
+      margin-top: 1em;
+      font-size: 0.9em;
+      color: #ff8080;
+    }
+    /* ===== Login Link Button ===== */
+    .login-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #001167;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .login-link:hover {
+      background: #0062b7;
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+    <form id="signupForm" class="signup-form">
+      <table>
+        <tr>
+          <td>
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" required>
+          </td>
+        </tr>
+      </table>
+      <input type="submit" value="Sign Up">
+    </form>
+    <p id="message" class="message"></p>
+    <!-- Link to login page for users with an existing account -->
+    <a href="login.html" class="login-link">Already have an account? Login</a>
+  </div>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      // Retrieve the form values
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const messageEl = document.getElementById("message");
+      
+      // Validate that passwords match
+      if (password !== confirmPassword) {
+        messageEl.textContent = "Passwords do not match!";
+        return;
+      }
+      
+      // Retrieve existing users from localStorage
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      
+      // Check if the username already exists
+      if (users.find(user => user.username === username)) {
+        messageEl.textContent = "Username already exists!";
+        return;
+      }
+      
+      // Create new user object (Note: In production, always hash passwords!)
+      const newUser = {
+        username: username,
+        password: password
+      };
+      
+      // Add the new user and update localStorage
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+      
+      // Save the current user for login page usage
+      sessionStorage.setItem("currentUser", username);
+      
+      messageEl.style.color = "#80ff80";
+      messageEl.textContent = "User successfully registered! Redirecting to login...";
+      
+      // Redirect to login page after 2 seconds
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Food - University of Dundee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* ===== Base & Reset ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: url("image.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    
+    /* ===== Header ===== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .header-left .logo {
+      color: #0062b7;
+      font-size: 2em;
+      margin-right: 10px;
+    }
+    header h1 {
+      font-size: 1.8em;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+    }
+    nav a {
+      background: #0062b7;
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #001167;
+    }
+    
+    /* ===== Main Overlay Content ===== */
+    .main-overlay {
+      background: rgba(0, 0, 0, 0.7);
+      margin-top: 100px; /* leave space for fixed header */
+      padding: 2em;
+      width: 90%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 8px;
+      text-align: left;
+    }
+    .main-overlay h2 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    }
+    .main-overlay p {
+      font-size: 1.2em;
+      margin-bottom: 1em;
+      line-height: 1.5;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    }
+    
+    /* ===== Food Cards ===== */
+    #foodList {
+      margin-top: 2em;
+    }
+    .food-item {
+      background: #1d1d1d;
+      color: #ffffff;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 600px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .food-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .food-item .loc-name {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .food-item .loc-category {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .food-item .loc-description {
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+    
+    /* ===== Add to Favourites Button ===== */
+    .fav-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #0062b7, #001167);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .fav-btn:hover {
+      background: linear-gradient(45deg, #001167, #0062b7);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h2 class="logo">DNG</h2>
+      <h1>Food</h1>
+    </div>
+    <nav>
+      <a href="main.html">Home</a>
+      <a href="accommodation.html">Accommodations</a>
+      <a href="clubs.html">Clubs</a>
+      <a href="food.html">Food</a>
+      <a href="study.html">Study</a>
+      <a href="favourites.html">My Favourites</a>
+      <a href="#" id="logoutLink">Logout</a>
+    </nav>
+  </header>
+  
+  <!-- Main Overlay Content -->
+  <div class="main-overlay">
+    <h2>Food Venues in Dundee</h2>
+    <p>Discover the best food spots around campus and the city.</p>
+    <div id="foodList">
+      <div class="food-item" data-name="Morrison Café">
+        <div class="loc-name">Morrison Café</div>
+        <div class="loc-category">(Food)</div>
+        <p class="loc-description">A popular on-campus café serving coffee, sandwiches, and snacks.</p>
+        <button class="fav-btn" onclick="addFavourite(this)">Add to Favourites</button>
+      </div>
+      <div class="food-item" data-name="Campus Bistro">
+        <div class="loc-name">Campus Bistro</div>
+        <div class="loc-category">(Food)</div>
+        <p class="loc-description">A modern bistro offering a variety of meals and a friendly atmosphere.</p>
+        <button class="fav-btn" onclick="addFavourite(this)">Add to Favourites</button>
+      </div>
+      <div class="food-item" data-name="Dundee Diner">
+        <div class="loc-name">Dundee Diner</div>
+        <div class="loc-category">(Food)</div>
+        <p class="loc-description">A local diner known for its hearty meals and casual vibe.</p>
+        <button class="fav-btn" onclick="addFavourite(this)">Add to Favourites</button>
+      </div>
+      <div class="food-item" data-name="The Food Market">
+        <div class="loc-name">The Food Market</div>
+        <div class="loc-category">(Food)</div>
+        <p class="loc-description">A vibrant market offering fresh produce, street food, and international flavors.</p>
+        <button class="fav-btn" onclick="addFavourite(this)">Add to Favourites</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Dummy addFavourite function that stores the item in localStorage.
+    function addFavourite(button) {
+      const foodItem = button.parentNode;
+      const fav = {
+        name: foodItem.getAttribute("data-name"),
+        category: foodItem.querySelector(".loc-category").textContent.trim(),
+        description: foodItem.querySelector(".loc-description").textContent.trim()
+      };
+
+      const user = sessionStorage.getItem("currentUser") || "defaultUser";
+      let favourites = JSON.parse(localStorage.getItem("favourites_" + user)) || [];
+
+      if (favourites.some(f => f.name === fav.name)) {
+        alert(fav.name + " is already in your favourites!");
+        return;
+      }
+
+      favourites.push(fav);
+      localStorage.setItem("favourites_" + user, JSON.stringify(favourites));
+      alert(fav.name + " added to favourites!");
+    }
+
+    // Dummy logout function
+    function logout() {
+      sessionStorage.removeItem("currentUser");
+      window.location.href = "login.html";
+    }
+    document.getElementById("logoutLink").addEventListener("click", function(e) {
+      e.preventDefault();
+      logout();
+    });
+
+    // Set a default user if none exists (for demo purposes)
+    if (!sessionStorage.getItem("currentUser")) {
+      sessionStorage.setItem("currentUser", "defaultUser");
+    }
+  </script>
+    <!-- Footer -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  <footer>
+    <p><br>&copy; 2025 University of Dundee. All Rights Reserved.</p>
+    <p>Designed by DNG. Team members: Olivia, Alex, Oleksii, Kirill</p>
+  </footer>
+</body>
+</html>

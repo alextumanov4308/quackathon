@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accommodations - University of Dundee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* ===== Base & Reset ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: url("image.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    
+    /* ===== Header ===== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      padding: 20px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .header-left .logo {
+      color: #0062b7;
+      font-size: 2em;
+      margin-right: 10px;
+    }
+    header h1 {
+      font-size: 1.8em;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+    }
+    nav a {
+      background: #0062b7;
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #001167;
+    }
+    
+    /* ===== Main Overlay Content ===== */
+    .main-overlay {
+      background: rgba(0, 0, 0, 0.7);
+      margin-top: 100px; /* leave space for fixed header */
+      padding: 2em;
+      width: 90%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 8px;
+      text-align: left;
+    }
+    .main-overlay h2 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    }
+    .main-overlay p {
+      font-size: 1.2em;
+      margin-bottom: 1em;
+      line-height: 1.5;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    }
+    
+    /* ===== Accommodation Cards ===== */
+    #accommodationList {
+      margin-top: 2em;
+    }
+    .acc-item {
+      background: #1d1d1d;
+      color: #ffffff;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 600px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .acc-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .acc-item .loc-name {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .acc-item .loc-category {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .acc-item .loc-description {
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+    .acc-item .more-info {
+      color: #0062b7;
+      text-decoration: underline;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    .acc-item .more-info:hover {
+      color: #001167;
+    }
+    
+    /* ===== Add to Favourites Button ===== */
+    .fav-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #0062b7, #001167);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .fav-btn:hover {
+      background: linear-gradient(45deg, #001167, #0062b7);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h2 class="logo">DNG</h2>
+      <h1>Accommodations</h1>
+    </div>
+    <nav>
+      <a href="main.html">Home</a>
+      <a href="accommodation.html">Accommodations</a>
+      <a href="clubs.html">Clubs</a>
+      <a href="food.html">Food</a>
+      <a href="study.html">Study</a>
+      <a href="favourites.html">My Favourites</a>
+      <a href="#" id="logoutLink">Logout</a>
+    </nav>
+  </header>
+  
+  <!-- Main Overlay Content -->
+  <div class="main-overlay">
+    <h2>Accommodations in Dundee</h2>
+    <p>Discover the best accommodation options available near the University of Dundee. Click on "More Info" for additional details.</p>
+    <div id="accommodationList">
+      <!-- Belmont Flats -->
+      <div class="acc-item" data-name="Belmont Flats">
+        <div class="loc-name">Belmont Flats</div>
+        <div class="loc-category">(Accommodation)</div>
+        <p class="loc-description">Belmont Flats offer modern living spaces with excellent amenities and proximity to campus. Perfect for students looking for convenience and comfort.</p>
+        <a class="more-info" href="https://www.dundee.ac.uk/accommodation/flats/belmont-flats" target="_blank">More Info</a>
+        <br><br>
+        <button class="fav-btn" onclick="addFavourite(this)">Add to Favourites</button>
+      </div>
+      <!-- Heathfield Flats -->
+      <div class="acc-item" data-name="Heathfield Flats">
+        <div class="loc-name">Heathfield Flats</div>
+        <div class="loc-category">(Accommodation)</div>
+        <p class="loc-description">Heathfield Flats provide affordable yet comfortable accommodation with community facilities and easy access to the university.</p>
+        <a class="more-info" href="https://www.dundee.ac.uk/accommodation/flats/heathfield" target="_blank">More Info</a>
+        <br><br>
+        <button class="fav-btn" onclick="addFavourite(this)">Add to Favourites</button>
+      </div>
+      <!-- Seabraes 1-32 -->
+      <div class="acc-item" data-name="Seabraes 1-32">
+        <div class="loc-name">Seabraes 1-32</div>
+        <div class="loc-category">(Accommodation)</div>
+        <p class="loc-description">Seabraes 1-32 offers stylish student flats with modern facilities, designed to cater to the needs of a diverse student community.</p>
+        <a class="more-info" href="https://www.dundee.ac.uk/accommodation/flats/seabraes-1-32" target="_blank">More Info</a>
+        <br><br>
+        <button class="fav-btn" onclick="addFavourite(this)">Add to Favourites</button>
+      </div>
+      <!-- West Park Flats -->
+      <div class="acc-item" data-name="West Park Flats">
+        <div class="loc-name">West Park Flats</div>
+        <div class="loc-category">(Accommodation)</div>
+        <p class="loc-description">West Park Flats provide spacious accommodation with landscaped gardens and modern amenities, ideal for a balanced student life.</p>
+        <a class="more-info" href="https://www.dundee.ac.uk/accommodation/flats/west-park-flats" target="_blank">More Info</a>
+        <br><br>
+        <button class="fav-btn" onclick="addFavourite(this)">Add to Favourites</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Dummy addFavourite function that stores the item in localStorage.
+    function addFavourite(button) {
+      const accItem = button.parentNode;
+      const fav = {
+        name: accItem.getAttribute("data-name"),
+        category: accItem.querySelector(".loc-category").textContent.trim(),
+        description: accItem.querySelector(".loc-description").textContent.trim()
+      };
+
+      const user = sessionStorage.getItem("currentUser") || "defaultUser";
+      let favourites = JSON.parse(localStorage.getItem("favourites_" + user)) || [];
+
+      if (favourites.some(f => f.name === fav.name)) {
+        alert(fav.name + " is already in your favourites!");
+        return;
+      }
+
+      favourites.push(fav);
+      localStorage.setItem("favourites_" + user, JSON.stringify(favourites));
+      alert(fav.name + " added to favourites!");
+    }
+
+    // Dummy logout function
+    function logout() {
+      sessionStorage.removeItem("currentUser");
+      window.location.href = "login.html";
+    }
+    document.getElementById("logoutLink").addEventListener("click", function(e) {
+      e.preventDefault();
+      logout();
+    });
+
+    // Set a default user for demo purposes if not already set
+    if (!sessionStorage.getItem("currentUser")) {
+      sessionStorage.setItem("currentUser", "defaultUser");
+    }
+  </script>
+    <!-- Footer -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  <footer>
+    <p><br>&copy; 2025 University of Dundee. All Rights Reserved.</p>
+    <p>Designed by DNG. Team members: Olivia, Alex, Oleksii, Kirill</p>
+  </footer>
+</body>
+</html>

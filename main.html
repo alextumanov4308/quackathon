@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Locations - University of Dundee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* ===== Base & Reset ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: url("image.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    
+    /* ===== Header ===== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .header-left .logo {
+      color: #0062b7;
+      font-size: 2em;
+      margin-right: 10px;
+    }
+    header h1 {
+      font-size: 1.8em;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+    }
+    nav a {
+      background: #0062b7;
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #001167;
+    }
+    
+    /* ===== Main Overlay Content ===== */
+    .main-overlay {
+      background: rgba(0, 0, 0, 0.7);
+      margin-top: 100px; /* leave space for fixed header */
+      padding: 2em;
+      width: 90%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 8px;
+      text-align: cen; /* Right-align text instead of center */
+    }
+    .main-overlay h2 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    }
+    .main-overlay p {
+      font-size: 1.2em;
+      margin-bottom: 1em;
+      line-height: 1.5;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    }
+    
+    /* ===== Search Bar ===== */
+    .search-container {
+      margin: 2em auto;
+      width: 80%;
+      max-width: 600px;
+    }
+    #searchQuery {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 1em;
+    }
+    #searchButton {
+      background: #0062b7;
+      color: #fff;
+      padding: 15px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background 0.3s;
+    }
+    #searchButton:hover {
+      background: #001167;
+    }
+    
+    /* ===== Search Results ===== */
+    #searchResults {
+      margin-top: 2em;
+    }
+    .search-result {
+      background: #1d1d1d;
+      color: #dedede;
+      padding: 20px;
+      margin: 30px auto;  /* Increased bottom margin for extra spacing */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      text-align: left;  /* Right-align the text in each result card */
+      width: 100%;
+      max-width: 600px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .search-result:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* ===== Additional Info Section ===== */
+    .info-section {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2em;
+      margin: 2em auto;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      text-align: left; /* This section remains left-aligned */
+      line-height: 1.6;
+    }
+    .info-section h3 {
+      font-size: 1.8em;
+      margin-bottom: 0.5em;
+      color: #0062b7;
+    }
+    .info-section p {
+      font-size: 1em;
+      margin-bottom: 1em;
+    }
+    /* Stylish "Add to Favourites" button */
+    .fav-btn {
+      display: inline-block;
+      margin-top: 1em;
+      padding: 15px 30px;
+      background: linear-gradient(45deg, #0062b7, #001167);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .fav-btn:hover {
+      background: linear-gradient(45deg, #001167, #0062b7);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px);
+    }
+    /* ===== Map Section ===== */
+    .map-section {
+      margin: 2em auto;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .map-section iframe {
+      width: 100%;
+      height: 450px;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h2 class="logo">DNG</h2>
+      <h1>University of Dundee Campus Locations</h1>
+    </div>
+    <nav>
+      <a href="main.html">Home</a>
+      <a href="accommodation.html">Accommodations</a>
+      <a href="clubs.html">Clubs</a>
+      <a href="food.html">Food</a>
+      <a href="study.html">Study</a>
+      <a href="favourites.html">My Favourites</a>
+      <a href="#" id="logoutLink">Logout</a>
+    </nav>
+  </header>
+  
+  <!-- Main Overlay Content -->
+  <div class="main-overlay">
+    <h2>Welcome, <span id="currentUser">User</span>!</h2>
+    <p>Explore the best spots around our campus.</p>
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input type="text" id="searchQuery" placeholder="Enter keyword or category">
+      <button id="searchButton">Search</button>
+    </div>
+    <!-- Search Results -->
+    <div id="searchResults"></div>
+  </div>
+  
+  <!-- Additional Information Section -->
+  <div class="info-section">
+    <h3>About Dundee</h3>
+    <p>Dundee is a dynamic city on Scotland’s east coast, renowned for its rich history and vibrant cultural scene. With a bustling waterfront, numerous museums, and a growing creative industry, Dundee offers both traditional charm and modern innovation. Its compact size makes it easy to explore, yet its diversity in arts, technology, and cuisine provides endless opportunities for discovery.</p>
+    
+    <h3>University of Dundee</h3>
+    <p>The University of Dundee is a modern institution recognized for its research excellence, diverse student community, and innovative teaching methods. With state-of-the-art facilities and a focus on interdisciplinary collaboration, the university fosters a dynamic academic environment that empowers students to excel in their chosen fields.</p>
+    
+    <h3>Student Life</h3>
+    <p>Student life in Dundee is a vibrant mix of academic rigor and social engagement. The city offers a variety of clubs, sports, and cultural events, ensuring that students enjoy a well-rounded experience. Whether you’re attending lively festivals, exploring historical landmarks, or participating in university-run activities, Dundee provides a nurturing environment for personal and professional growth.</p>
+  </div>
+
+  <!-- Map Section -->
+  <div class="map-section">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11617.91207853791!2d-2.9778862844992524!3d56.46119118317371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4886c9eeb9a338e3%3A0xa0db2f27b6a3e2f4!2sUniversity%20of%20Dundee!5e0!3m2!1sen!2suk!4v1690000000000"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+  
+  <script src="script.js"></script>
+  <script>
+    // Initialize the search page (if your script.js defines initSearch())
+    initSearch();
+
+    // Dummy logout function
+    function logout() {
+      sessionStorage.removeItem("currentUser");
+      window.location.href = "login.html";
+    }
+    document.getElementById("logoutLink").addEventListener("click", function(e) {
+      e.preventDefault();
+      logout();
+    });
+    
+    // For demo: Set a default user if not set
+    if (!sessionStorage.getItem("currentUser")) {
+      sessionStorage.setItem("currentUser", "defaultUser");
+    }
+  </script>
+  <!-- Footer -->
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <footer>
+    <p><br>&copy; 2025 University of Dundee. All Rights Reserved.</p>
+    <p>Designed by DNG. Team members: Olivia, Alex, Oleksii, Kirill</p>
+  </footer>
+</body>
+</html>
